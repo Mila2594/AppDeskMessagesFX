@@ -1,0 +1,7 @@
+module:com.milacanete.messagesfx
+com.milacanete.messagesfx
+com.milacanete.messagesfx.controllers
+com.milacanete.messagesfx.models
+com.milacanete.messagesfx.models.responses
+com.milacanete.messagesfx.service
+com.milacanete.messagesfx.utils

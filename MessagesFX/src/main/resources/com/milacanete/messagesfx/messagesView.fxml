@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" prefHeight="580.0" prefWidth="690.0" spacing="10.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.milacanete.messagesfx.controllers.MessagesController">
+      <HBox alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS">
+            <HBox prefHeight="100.0" spacing="15.0">
+                  <VBox alignment="CENTER_LEFT" spacing="40.0">
+                        <Label fx:id="NameUserLabel" text="Name User">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="ChangeImageButton" mnemonicParsing="false" prefWidth="120.0" text="Change image" VBox.vgrow="ALWAYS" />
+                  </VBox>
+                  <ImageView fx:id="AvatarUserImageView" fitHeight="90.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS" />
+            </HBox>
+            <HBox alignment="BOTTOM_CENTER" HBox.hgrow="ALWAYS">
+                  <Label text="Your messages" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+            </HBox>
+            <HBox alignment="BOTTOM_RIGHT" prefWidth="205.0">
+                  <Button fx:id="RefreshButton" mnemonicParsing="false" prefWidth="120.0" text="Refresh" HBox.hgrow="ALWAYS" />
+            </HBox>
+      </HBox>
+      <TableView fx:id="MessagesUserTableView" VBox.vgrow="ALWAYS">
+        <columns>
+          <TableColumn fx:id="MessageColumn" prefWidth="240.0" text="Message" />
+          <TableColumn fx:id="ImagenColumn" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Image" />
+            <TableColumn fx:id="SentColumn" prefWidth="100.0" text="Sent" />
+         <TableColumn fx:id="SenderUserColumn" prefWidth="120.0" text="Sender" />
+         <TableColumn fx:id="AvatarSenderColumn" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Avatar" />
+        </columns>
+      </TableView>
+      <Button fx:id="DeleteMessageButton" disable="true" mnemonicParsing="false" prefWidth="200.0" text="Delete message">
+         <VBox.margin>
+            <Insets bottom="20.0" top="10.0" />
+         </VBox.margin>
+      </Button>
+      <HBox alignment="CENTER_LEFT" fillHeight="false">
+            <Label prefWidth="307.0" text="Sean a message">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label text="Users" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+      </HBox>
+      <TableView fx:id="UsersTableView" VBox.vgrow="ALWAYS">
+        <columns>
+          <TableColumn fx:id="AvatarColumn" prefWidth="197.5" style="-fx-alignment: CENTER;" text="Avatar" />
+          <TableColumn fx:id="NickNameColumn" prefWidth="456.5" text="Nick name" />
+        </columns>
+      </TableView>
+      <HBox alignment="BOTTOM_CENTER" spacing="15.0" VBox.vgrow="ALWAYS">
+            <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="8.0" HBox.hgrow="ALWAYS">
+                  <Label text="Message">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="NewMessageTextField" promptText="write your message here" VBox.vgrow="ALWAYS" />
+            </VBox>
+            <VBox alignment="BOTTOM_CENTER" spacing="5.0">
+                  <ImageView fx:id="ImageMessageImageView" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+                  <Button fx:id="SelectImageButton" mnemonicParsing="false" prefWidth="120.0" text="Select image" />
+            </VBox>
+            <Button fx:id="SendMessageButton" disable="true" mnemonicParsing="false" prefWidth="120.0" text="Send message" HBox.hgrow="ALWAYS" />
+      </HBox>
+   <padding>
+      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+   </padding>
+</VBox>

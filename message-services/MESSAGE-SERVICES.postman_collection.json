@@ -1,0 +1,372 @@
+{
+	"info": {
+		"_postman_id": "2b7e6ecc-cffa-4504-a842-82d6ae766c36",
+		"name": "MESSAGE-SERVICES",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40264331"
+	},
+	"item": [
+		{
+			"name": "POST New User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"name\": \"test6\",\r\n \"password\": \"12345\",\r\n \"image\": \"JPEG Image in Base64 format\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Login User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Guardar token\", function () {\r",
+							"    var jsonData = pm.response.json(); \r",
+							"   pm.globals.set(\"auth_token\", jsonData.token);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"name\": \"test6\",\r\n \"password\": \"12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/user/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET All Users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Actualizar user_id con el de test6\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"    if (jsonData.ok && jsonData.users) {\r",
+							"        let user = jsonData.users.find(u => u.name === \"test6\");\r",
+							"\r",
+							"        if (user && user._id) {\r",
+							"            pm.globals.set(\"user_id\", user._id);\r",
+							"        } else {\r",
+							"            console.warn(\"No se encontró el usuario test6 en la respuesta.\");\r",
+							"        }\r",
+							"    } else {\r",
+							"        console.warn(\"No se encontró ningún usuario en la respuesta.\");\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/user/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Change Avatar",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let userId = pm.globals.get(\"user_id\");\r",
+							"\r",
+							"if (userId && typeof userId === \"string\") {\r",
+							"    userId = userId.trim(); // 🔹 Eliminar espacios en blanco\r",
+							"    pm.variables.set(\"user_id_value\", userId);\r",
+							"} else {\r",
+							"    console.warn(\"user_id no encontrado en Variables Globales. Asegúrate de ejecutar `GET /users` antes.\");\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": \"{{user_id_value}}\",\r\n    \"image\": \"data:image/jpeg;base64,/9j/4AAQSkZJRg...\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/user/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST New Message",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Guardar message_id automáticamente desde PUT\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"    if (jsonData.ok && jsonData.message && jsonData.message._id) {\r",
+							"        let messageId = jsonData.message._id; \r",
+							"        pm.globals.set(\"message_id\", messageId);\r",
+							"    } else {\r",
+							"        console.warn(\"No se encontró message_id en la respuesta de PUT.\");\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"message\": \"¡Hola test6! otro es un mensaje de prueba.\",\r\n    \"image\": null\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/message/messages/{{user_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"message",
+						"messages",
+						"{{user_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET All Messages",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/message/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"message",
+						"messages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Message",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let messageId = pm.globals.get(\"message_id\");\r",
+							"if (messageId) {\r",
+							"    pm.variables.set(\"message_id\", messageId.trim());\r",
+							"} else {\r",
+							"    console.warn(\"message_id no encontrado. Ejecuta `PUT /message` primero.\");\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/message/messages/{{message_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"message",
+						"messages",
+						"{{message_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

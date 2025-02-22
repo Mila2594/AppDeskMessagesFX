@@ -45,7 +45,7 @@ Este repositorio contiene dos carpetas principales:
 
 ## 🎥 Flujo de la Aplicación
 Puedes ver un video demostrativo del flujo de la aplicación en el siguiente enlace:
-[Ver video](#) *(Reemplaza con el enlace del video)*
+[![Ver video](https://img.shields.io/badge/📺-Ver%20Video-blue)](https://drive.google.com/drive/folders/1cRJwJstl7nGZigQ2uY_hUNQphWSaCg2m)
 
 ## 🛠️ Tecnologías Utilizadas
 - **JavaFX**: Para el desarrollo de la interfaz gráfica.
